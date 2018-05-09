@@ -1,0 +1,74 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+	desc "Description of what the lane does"
+	scheme = "TradingHelper"
+	bundleID = "com.shyb.SHGT"
+	#version_number = "8.0.8"
+	# 输出目录名称定义，文件包名定义
+	currentTime = Time.new.strftime("%Y-%m-%d %H-%M")
+	currentday = Time.new.strftime("%Y-%m-%d")
+	outputDirectory = "./build/#{currentday}"
+	logDirectory = "#{outputDirectory}/fastlanelog"
+
+  lane :adhoc do |options|
+		output_name = "#{scheme}_adhoc_#{options[:version]}_#{currentTime}.ipa"
+    #add actions here: https://docs.fastlane.tools/actions
+		match(
+      	git_url:"https://github.com/tangyijie/ouyeelGit.git",
+      	type:"adhoc",
+      	readonly:true
+      )
+		increment_version_number_in_plist(
+      target: "#{scheme}",
+      version_number: "#{options[:version]}"
+    )
+    #get_certificates           # invokes cert
+    #get_provisioning_profile   # invokes sigh
+    #sigh(development:true)
+    build_app(
+			workspace: "TradingHelper.xcworkspace",
+      scheme: "#{scheme}",
+      # 打包方式， ["app-store", "ad-hoc", "package", "enterprise", "development", "developer-id"]
+      export_method: "ad-hoc",
+      # 输出文件夹
+      output_directory: outputDirectory,
+      # 输出包名称
+      output_name:output_name,
+      # 打包的配置 Debug Release 通过参数传入
+      configuration:"#{options[:export_method]}",
+      # 打包日志输出文件夹
+      buildlog_path:logDirectory,
+      # 打包证书
+      codesigning_identity:'iPhone Distribution: Shanghai Steel Trading Center Co., Ltd. (K9Z4MPBQL4)',
+      # Xcode 9 默认不允许访问钥匙串的内容,必须要设置此项才可以，运行过程可能会提示是否允许访问钥匙串，需要输入电脑密码
+      export_xcargs: "-allowProvisioningUpdates",
+      # 导出选项
+      export_options:{
+          # 打包导出时可选描述文件 "bundleID"=>"描述文件名称"
+          provisioningProfiles: {
+              "com.shyb.SHGT" => "match AdHoc com.shyb.SHGT",
+          }
+        }
+      )
+			desc "upload app to pgyer......................"
+      pgyer(api_key: "a61e495e2194d90c02eac1dd74d78179", user_key: "666898597998595dd3cdf69ec825f461")
+
+
+  end
+end
