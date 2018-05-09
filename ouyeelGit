@@ -29,3 +29,10 @@ fastlane add_plugin firim
 
 
 fastlane adhoc version:8.8.08 export_method:Debug
+
+
+--------
+git 
+git add -A
+git commit -m 'messages'
+git push
