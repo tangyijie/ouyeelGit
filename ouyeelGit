@@ -1,4 +1,31 @@
-git remote add origin https://tangyijie@126.com:tangyijie0714@github.com/tangyijie/Ouyeel.git
-
+http://baijiahao.baidu.com/s?id=1594020289435783887&wfr=spider&for=pc
+https://www.jianshu.com/p/5661000d4d7f
+https://www.jianshu.com/p/b81eeb5d7858   --github ssh key
 
 https://github.com/tangyijie/ouyeelGit
+
+
+https://github.com/tangyijie/ouyeelGit.git
+
+liujing172507@baosteel.com
+Ftyql7037151
+
+com.shyb.SHGT
+
+
+fastlane fastlane-credentials add --username liujing172507@baosteel.com
+pwd:1212qwqw
+
+
+
+---------------
+tangyijie@baosight.com
+
+https://github.com/tangyijie/ouyeelEnterprise.git
+
+
+fastlane add_plugin versioning
+fastlane add_plugin firim
+
+
+fastlane adhoc version:8.8.08 export_method:Debug
